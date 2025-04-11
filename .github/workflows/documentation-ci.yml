@@ -1,0 +1,30 @@
+name: Documentation CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  markdown-lint:
+    name: Lint Markdown Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install markdownlint CLI
+        run: npm install -g markdownlint-cli
+
+      - name: Run markdownlint on docs folder
+        run: markdownlint docs/**/*.md
+
+  # Optionally, you can add other jobs such as spell check or link checks.
